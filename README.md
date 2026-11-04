@@ -86,5 +86,30 @@ RESULT:
 **Still** Didn't work  
 <img width="auto" height="300" alt="image" src="https://github.com/user-attachments/assets/33ce07b1-108d-4aec-b48c-53f041a6f59b" />  
 
+I asked someone:  
+<img width="843" height="404" alt="image" src="https://github.com/user-attachments/assets/ebfe4b22-a740-4de7-81f2-046b3a2de4cc" />  
+> - I realised that my shebang wasn't right (I missed the `!`)
 
+Then it worked Alhamdulillah  
+> <img width="1351" height="226" alt="image" src="https://github.com/user-attachments/assets/3de992f8-b657-4ca8-a35a-e863166e42dd" />  
 
+<br>
+
+Previously, I tried running the last line, `sudo echo ...`, manually (by connecting to instance), but, there was a 'Permission denied error', as re-demonstrated below..     
+<img width="1127" height="105" alt="image" src="https://github.com/user-attachments/assets/1297115d-fee2-4cdb-8180-5b858c509345" />  
+- I was taught, I could use `| sudo tee`, to achieve what I needed (ie. the hello message on the web server)  
+> - Technically, I could use `| sudo tee ..` to pipe the stdout (output of echo command) into index.html (a new file, which we create with this `tee`.)  
+
+#### What problem does `sudo tee` solve?  
+__Initial understanding: Redirecting an output and Writing to a file, as a standard user (perhaps, on your EC2 instance)__      
+- if I failed to do a redirect  eg. `sudo echo "text" > /root/file.txt`  
+> - the Shell, tries to open the file as the **current** (standard) **user**; doesn't have permissions.  
+> - `sudo tee` solves this and performs the operation, as a root user  
+
+Therefore, why did it (this redirect command) work, in User Data?    
+>   The script, in User Data, ran as root (so the **current user** had permissions to access/ write/ create an index.html file)  
+
+Extra:  
+`sudo tee -a` allows appending to existing content (so the file isn't overwritten)   
+`sudo tee` functions as a cat command, outputting the data you intended to write to file, onto the screen/ terminal..  
+> technically, it **reads stdin** and **writes** to stdout (**terminal**) **and to file**, simultaneously  
